@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from "next/server"
 
 connect()
 
+const generateRandomFourDigitNumber = (): number => {
+    return Math.floor(1000 + Math.random() * 9000);
+};
+
 export async function POST(request : NextRequest){
     try {
         const reqBody = await request.json()
@@ -16,7 +20,9 @@ export async function POST(request : NextRequest){
         if(!user){
             return NextResponse.json({error : "User not found"}, {status : 400})
         } else {
-            return NextResponse.json( {data : user._id} , {status : 200})
+            user.forgotPasswordToken = generateRandomFourDigitNumber()
+            const savedUser = await user.save()
+            return NextResponse.json( {data : savedUser._id} , {status : 200})
         }
 
     } catch (error : any) {
