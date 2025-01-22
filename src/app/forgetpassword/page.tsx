@@ -17,9 +17,9 @@ export default function VerifyEmailPage() {
 
     const verifyEmail = async() => {
         try {
-            const response = await axios.post("/api/users/getuserid" , {email})
+            const response = await axios.post("/api/users/forgetpassword" , {email})
             const id = response.data.data
-            router.push(`/resetpassword/:${id}`)
+            router.push(`/resetpassword/${id}`)
         } catch (error : any) {
             console.log("Login Failed" , error);
             toast.error(error.message)
@@ -29,7 +29,7 @@ export default function VerifyEmailPage() {
     return(
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
 
-            <h1 className="text-2xl">Reaset Password</h1>
+            <h1 className="text-2xl">Reset Password</h1>
             <h2 className="mt-3">Enter your email</h2>
             
             <input 

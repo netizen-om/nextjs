@@ -1,6 +1,7 @@
 import User from "@/models/userModel"
 import {connect} from "@/dbConfig/doConfig"
 import { NextRequest, NextResponse } from "next/server"
+import { sendEmail } from "@/helper/mailer";
 
 connect()
 
@@ -22,6 +23,7 @@ export async function POST(request : NextRequest){
         } else {
             user.forgotPasswordToken = generateRandomFourDigitNumber()
             const savedUser = await user.save()
+            sendEmail({email : savedUser.email,emailType : "RESET" , userId : savedUser._id})
             return NextResponse.json( {data : savedUser._id} , {status : 200})
         }
 
