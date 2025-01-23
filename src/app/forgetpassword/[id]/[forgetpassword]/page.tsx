@@ -12,15 +12,17 @@ export default function VerifyEmailPage() {
 
     const router = useRouter()
 
-    const [otp,setOtp] = useState("");
+    const [pass1,setPass1] = useState("");
+    const [pass2,setPass2] = useState("");
+
     const params = useParams();
-    const verifyOtp = async() => {
-        try {
-            console.log(params.id );
-            const response = await axios.post("/api/users/verifyotp", { id: params.id, otp });
-            console.log(response.data.success);
+    const changePassword = async() => {
+        try {     
+            if(pass1 !== pass2) return
+            const response = await axios.post("/api/users/changepassword" , {id : params.id , newPass : pass1})
+
             if(response.data.success){
-                router.push(`/forgetpassword/${params.id}/changepassword`)
+                router.push("/login")
             }
             
         } catch (error : any) {
@@ -31,20 +33,27 @@ export default function VerifyEmailPage() {
     return(
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
 
-            <h1 className="text-2xl">Enter OTP</h1>
+            <h1 className="text-2xl">Reset Password</h1>
             
             <input 
             className="p-2 mt-1 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
             id="email"
-            onChange={(e) => setOtp(e.target.value)}
+            onChange={(e) => setPass1(e.target.value)}
             type="text"
-            placeholder="OTP"
+            placeholder="Password"
+            />
+            <input 
+            className="p-2 mt-1 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+            id="email"
+            onChange={(e) => setPass2(e.target.value)}
+            type="text"
+            placeholder="Password"
             />
 
             <button
-            onClick={verifyOtp}
+            onClick={changePassword}
             className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">
-                Verify
+                Change Password
             </button>
 
         </div>

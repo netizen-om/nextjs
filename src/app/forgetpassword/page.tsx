@@ -13,13 +13,12 @@ export default function VerifyEmailPage() {
     const router = useRouter()
 
     const [email,setEmail] = useState("your email")
-    const [isEmailValid,setIsEmailValid] = useState(true)
 
     const verifyEmail = async() => {
         try {
             const response = await axios.post("/api/users/forgetpassword" , {email})
             const id = response.data.data
-            router.push(`/resetpassword/${id}`)
+            router.push(`/forgetpassword/${id}`)
         } catch (error : any) {
             console.log("Login Failed" , error);
             toast.error(error.message)
@@ -39,8 +38,6 @@ export default function VerifyEmailPage() {
             type="text"
             placeholder="email"
             />
-
-            {isEmailValid ? "" : <h4>Inavlid Email</h4>  }
 
             <button
             onClick={verifyEmail}

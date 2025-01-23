@@ -1,7 +1,7 @@
 import User from "@/models/userModel";
 import { connect } from "@/dbConfig/doConfig";
 import { NextRequest, NextResponse } from "next/server";
-
+// http://localhost:3000/forgetpassword/678bba3ce0f4b62cdba11c7e
 connect();
     
 export async function POST(request: NextRequest) {
